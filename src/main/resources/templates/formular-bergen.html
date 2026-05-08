@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Für Bergung eintragen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="container py-4 flex-grow-1" style="max-width: 720px;">
+
+    <header class="mb-4">
+        <span class="eyebrow">Bergung</span>
+        <h1>Für Bergung eintragen</h1>
+    </header>
+
+    <div th:if="${netz == null}" class="alert alert-danger">
+        Das Netz wurde nicht gefunden.
+    </div>
+
+    <div th:if="${netz != null}">
+
+        <div class="netz-info">
+            <dl>
+                <dt>ID</dt>
+                <dd th:text="${netz.id}">0</dd>
+                <dt>Position</dt>
+                <dd>
+                    <span th:text="${netz.breitengrad}">0</span> /
+                    <span th:text="${netz.laengengrad}">0</span>
+                </dd>
+                <dt>Größe</dt>
+                <dd><span th:text="${netz.geschaetzteGroesseKg}">0</span> kg</dd>
+            </dl>
+        </div>
+
+        <p class="text-muted">
+            Name und Telefonnummer sind hier Pflicht, damit Rückfragen
+            möglich sind.
+        </p>
+
+        <form th:object="${bergenForm}" th:action="@{|/netze/${netz.id}/bergen|}" method="post">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control"
+                       th:field="*{name}"
+                       th:errorclass="is-invalid">
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('name')}"
+                     th:errors="*{name}">
+                    Fehlertext
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="telefonnummer" class="form-label">Telefonnummer</label>
+                <input type="text" class="form-control"
+                       th:field="*{telefonnummer}"
+                       th:errorclass="is-invalid">
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('telefonnummer')}"
+                     th:errors="*{telefonnummer}">
+                    Fehlertext
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Eintragen</button>
+                <a href="/netze" class="btn btn-outline-secondary">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

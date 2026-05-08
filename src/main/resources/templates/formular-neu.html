@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Geisternetz melden</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="container py-4 flex-grow-1" style="max-width: 720px;">
+
+    <header class="mb-4">
+        <span class="eyebrow">Neues Netz</span>
+        <h1>Geisternetz melden</h1>
+        <p class="text-muted">
+            Position und ungefähre Größe sind Pflicht. Kontaktdaten sind
+            optional — Meldungen sind anonym möglich.
+        </p>
+    </header>
+
+    <form th:object="${geisternetzForm}" th:action="@{/netze/neu}" method="post">
+
+        <div class="mb-3">
+            <label for="breitengrad" class="form-label">Breitengrad</label>
+            <input type="number" step="any"
+                   class="form-control"
+                   th:field="*{breitengrad}"
+                   th:errorclass="is-invalid">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('breitengrad')}"
+                 th:errors="*{breitengrad}">
+                Fehlertext
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="laengengrad" class="form-label">Längengrad</label>
+            <input type="number" step="any"
+                   class="form-control"
+                   th:field="*{laengengrad}"
+                   th:errorclass="is-invalid">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('laengengrad')}"
+                 th:errors="*{laengengrad}">
+                Fehlertext
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="geschaetzteGroesseKg" class="form-label">Geschätzte Größe (kg)</label>
+            <input type="number" step="any"
+                   class="form-control"
+                   th:field="*{geschaetzteGroesseKg}"
+                   th:errorclass="is-invalid">
+            <div class="invalid-feedback"
+                 th:if="${#fields.hasErrors('geschaetzteGroesseKg')}"
+                 th:errors="*{geschaetzteGroesseKg}">
+                Fehlertext
+            </div>
+        </div>
+
+        <hr class="my-4">
+        <h2 class="h5 mb-3">Kontaktdaten (optional)</h2>
+
+        <!-- Fehlermeldung der "beide oder keiner"-Regel -->
+        <div class="alert alert-danger"
+             th:if="${#fields.hasErrors('kontaktDatenVollstaendig')}"
+             th:errors="*{kontaktDatenVollstaendig}">
+            Fehlertext
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" th:field="*{name}">
+        </div>
+
+        <div class="mb-3">
+            <label for="telefonnummer" class="form-label">Telefonnummer</label>
+            <input type="text" class="form-control" th:field="*{telefonnummer}">
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary">Netz melden</button>
+            <a href="/netze" class="btn btn-outline-secondary">Abbrechen</a>
+        </div>
+    </form>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>
