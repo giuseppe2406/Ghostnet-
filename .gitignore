@@ -1,0 +1,26 @@
+# Build-Ergebnisse von Maven
+target/
+
+# IntelliJ IDEA Dateien
+.idea/
+*.iml
+
+# Eclipse Dateien
+.project
+.classpath
+.settings/
+
+# VS Code Dateien
+.vscode/
+
+# Datenbank-Dateien (werden beim Start automatisch angelegt)
+data/
+*.mv.db
+*.trace.db
+
+# Logs
+*.log
+
+# OS-Dateien
+.DS_Store
+Thumbs.db
